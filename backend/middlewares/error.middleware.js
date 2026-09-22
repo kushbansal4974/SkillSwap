@@ -9,10 +9,11 @@ const errorMiddleware = (err, req, res, next) => {
 
         return res.status(400).json({
             success: false,
-            message: "Validation failed",
+            message: messages.join(". ") || "Validation failed",
             errors: messages,
         });
     }
+
 
     // Duplicate MongoDB key
     if (err.code === 11000) {

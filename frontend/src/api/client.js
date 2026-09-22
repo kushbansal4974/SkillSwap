@@ -40,18 +40,24 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
+    const errorData = error.response?.data;
+    const detailedMessage =
+      (Array.isArray(errorData?.errors) && errorData.errors.length > 0
+        ? errorData.errors.join(". ")
+        : errorData?.message) ||
+      errorData?.error ||
+      error.message ||
+      'Something went wrong. Please try again later.';
+
     const customError = {
-      message:
-        error.response?.data?.message ||
-        error.response?.data?.error ||
-        error.message ||
-        'Something went wrong. Please try again later.',
+      message: detailedMessage,
       status: error.response?.status,
-      data: error.response?.data,
+      data: errorData,
     };
 
     return Promise.reject(customError);
   }
+
 );
 
 export const setAuthToken = (token) => {

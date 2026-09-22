@@ -10,6 +10,7 @@ const CATEGORIES = [
   'Video Editing',
   'Photography',
   'Content Writing',
+  'Blog Writing',
   'Social Media',
   'Marketing',
   'Mobile Development',
@@ -52,10 +53,20 @@ export const CreateGig = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { title, category, price, description, coverImage } = formData;
+    const { title, category, price, description } = formData;
 
     if (!title.trim() || !category || !price || !description.trim()) {
       setError('Please fill in all required fields (Title, Category, Price, and Description).');
+      return;
+    }
+
+    if (title.trim().length < 3) {
+      setError('Gig title must be at least 3 characters.');
+      return;
+    }
+
+    if (description.trim().length < 5) {
+      setError('Description must be at least 5 characters.');
       return;
     }
 
@@ -77,7 +88,7 @@ export const CreateGig = () => {
         title: formData.title.trim(),
         category: formData.category,
         rate: Number(formData.price),
-        deliveryDays: Number(formData.deliveryDays) || 3,
+        deliveryDays: Math.max(1, Number(formData.deliveryDays) || 3),
         shortDescription: formData.shortDescription.trim() || formData.title.trim().slice(0, 100),
         description: formData.description.trim(),
         coverImage: formData.coverImage.trim() || PRESET_IMAGES[0].url,
@@ -86,8 +97,13 @@ export const CreateGig = () => {
 
       const created = await gigApi.createGig(payload);
       setSuccess(true);
+      const targetId = created?.id || created?._id;
       setTimeout(() => {
-        navigate(`/gigs/${created.id}`);
+        if (targetId) {
+          navigate(`/gigs/${targetId}`);
+        } else {
+          navigate('/explore');
+        }
       }, 1000);
     } catch (err) {
       setError(err.message || 'Failed to create gig. Please check your inputs.');
@@ -95,6 +111,7 @@ export const CreateGig = () => {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 transition-colors">

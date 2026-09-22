@@ -28,19 +28,17 @@ const gigSchema = new mongoose.Schema(
             type: String,
             required: [true, "Category is required"],
             trim: true,
-            enum: {
-                values: GIG_CATEGORIES,
-                message: "Invalid gig category",
-            },
+            default: "Web Development",
         },
 
         description: {
             type: String,
             required: [true, "Description is required"],
             trim: true,
-            minlength: [20, "Description must be at least 20 characters"],
+            minlength: [5, "Description must be at least 5 characters"],
             maxlength: [3000, "Description cannot exceed 3000 characters"],
         },
+
 
         shortDescription: {
             type: String,
