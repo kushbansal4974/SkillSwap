@@ -7,9 +7,24 @@ import axios from 'axios';
  * Defaults to http://localhost:5000/api
  */
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+const resolveBaseUrl = () => {
+  let url = import.meta.env.VITE_API_URL;
+  if (!url) {
+    return import.meta.env.PROD ? '/api' : 'http://localhost:5000/api';
+  }
+  url = url.trim();
+  if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('/')) {
+    url = `https://${url}`;
+  }
+  url = url.replace(/\/+$/, '');
+  if (!url.endsWith('/api') && !url.endsWith('/api/v1')) {
+    url = `${url}/api`;
+  }
+  return url;
+};
+
+const API_BASE_URL = resolveBaseUrl();
+
 
 
 export const apiClient = axios.create({

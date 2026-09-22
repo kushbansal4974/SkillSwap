@@ -15,6 +15,14 @@ try {
   console.warn("DNS server setup notice:", dnsErr.message);
 }
 
+process.on("unhandledRejection", (reason) => {
+  console.error("⚠️ Unhandled Rejection in Server:", reason);
+});
+process.on("uncaughtException", (err) => {
+  console.error("⚠️ Uncaught Exception in Server:", err);
+});
+
+
 const app = express();
 
 // Middlewares
@@ -39,7 +47,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/api/health", (req, res) => {
+app.get(["/health", "/api/health"], (req, res) => {
   res.json({
     success: true,
     status: "healthy",
@@ -48,14 +56,19 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Mount Core Brief Routes (supporting both /api and /api/v1 prefixes)
+// Mount Core Brief Routes (supporting root, /api, and /api/v1 prefixes)
 app.use("/api/users", userRoutes);
 app.use("/api/gigs", gigRoutes);
 app.use("/api/bookings", bookingRoutes);
 
+app.use("/users", userRoutes);
+app.use("/gigs", gigRoutes);
+app.use("/bookings", bookingRoutes);
+
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/gigs", gigRoutes);
 app.use("/api/v1/bookings", bookingRoutes);
+
 
 // Error handler
 app.use(errorMiddleware);
