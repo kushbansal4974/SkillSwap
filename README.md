@@ -1,7 +1,7 @@
 # SkillSwap — Creator Economy Gig Marketplace
 
 **Hackathon Team / ID**: `Haridwar Team 22`  
-**Team Member**: `Lakshya Kumar`  
+**Team Member**: `Lakshya Kumar`   `Kush Bansal`
 **Track**: `Track 2 · Real-World AI Products (Creator Economy — SkillSwap)`  
 **Standard API Implemented**: **YES** (Fully implements standard REST endpoints for automated test script grading & browser agents)  
 
