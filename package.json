@@ -1,0 +1,15 @@
+{
+  "name": "skillsswap",
+  "version": "1.0.0",
+  "description": "SkillSwap — Creator Gig Marketplace (Code2Career Track 2)",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "start:frontend": "npm run dev --prefix frontend",
+    "start:backend": "npm start --prefix backend",
+    "seed": "npm run seed --prefix backend",
+    "build": "npm run build --prefix frontend",
+    "build:frontend": "npm run build --prefix frontend"
+  }
+}
