@@ -15,7 +15,6 @@ const normalizeBooking = (b) => {
     agreedRate: Number(b.agreedRate || b.price || gig.rate || 0),
     requirementsNote: b.message || b.requirementsNote || '',
     status: (b.status || 'pending').toLowerCase(),
-    paymentStatus: (b.paymentStatus || 'pending').toLowerCase(),
     declineReason: b.declineReason || '',
     gig: {
       id: gig._id || gig.id || b.gigId,
@@ -124,24 +123,6 @@ export const bookingApi = {
     });
     const b = response.data?.data?.booking || response.data?.data || response.data;
     return normalizeBooking(b);
-  },
-
-  /**
-   * Create Razorpay / Sandbox payment order
-   * @param {string} bookingId
-   */
-  async createPaymentOrder(bookingId) {
-    const response = await apiClient.post('/payments/create-order', { bookingId });
-    return response.data?.data || response.data;
-  },
-
-  /**
-   * Verify Razorpay / Sandbox payment
-   * @param {Object} verificationData
-   */
-  async verifyPayment(verificationData) {
-    const response = await apiClient.post('/payments/verify', verificationData);
-    return response.data?.data || response.data;
   },
 };
 

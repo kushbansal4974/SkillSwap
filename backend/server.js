@@ -7,7 +7,6 @@ import errorMiddleware from "./middlewares/error.middleware.js";
 import userRoutes from "./routes/user.route.js";
 import gigRoutes from "./routes/gig.route.js";
 import bookingRoutes from "./routes/booking.route.js";
-import paymentRoutes from "./routes/payment.route.js";
 
 // Safe DNS servers configuration for MongoDB Atlas SRV resolution
 try {
@@ -49,16 +48,14 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Mount Routes (supporting both /api and /api/v1 prefixes for seamless deployment compatibility)
+// Mount Core Brief Routes (supporting both /api and /api/v1 prefixes)
 app.use("/api/users", userRoutes);
 app.use("/api/gigs", gigRoutes);
 app.use("/api/bookings", bookingRoutes);
-app.use("/api/payments", paymentRoutes);
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/gigs", gigRoutes);
 app.use("/api/v1/bookings", bookingRoutes);
-app.use("/api/v1/payments", paymentRoutes);
 
 // Error handler
 app.use(errorMiddleware);

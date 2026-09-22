@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronDown,
@@ -16,13 +16,10 @@ import {
   FileText,
   Smartphone,
   Camera,
-  LogIn,
-  UserPlus,
+  Compass,
 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
 import { useDemo } from '../context/DemoContext';
 import { ThemeToggle } from './theme/ThemeToggle';
-import { ProfileMenu } from './profile/ProfileMenu';
 
 const CATEGORIES = [
   { name: 'Web Development', icon: Code, path: '/explore?category=Web%20Development' },
@@ -35,11 +32,9 @@ const CATEGORIES = [
 ];
 
 export const Navbar = () => {
-  const { isAuthenticated, user, logout } = useAuth();
   const { isCreator, isClient, setRole } = useDemo();
   const [isCatOpen, setIsCatOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
   const navLinkClass = ({ isActive }) =>
     `text-xs font-semibold tracking-wide transition-colors py-1.5 px-3 rounded-xl ${
@@ -68,22 +63,34 @@ export const Navbar = () => {
               </span>
             </Link>
 
-            {/* Desktop Center Links (All 5 Brief Features Instantly Accessible) */}
+            {/* Desktop Center Links: All 5 Required Features */}
             <nav className="hidden md:flex items-center gap-1">
               <NavLink to="/explore" className={navLinkClass}>
-                Explore
+                <span className="flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5" />
+                  Explore
+                </span>
               </NavLink>
 
               <NavLink to="/create-gig" className={navLinkClass}>
-                Post a Gig
+                <span className="flex items-center gap-1.5">
+                  <PlusCircle className="w-3.5 h-3.5" />
+                  Post a Gig
+                </span>
               </NavLink>
 
               <NavLink to="/creator-dashboard" className={navLinkClass}>
-                Creator Dashboard
+                <span className="flex items-center gap-1.5">
+                  <LayoutDashboard className="w-3.5 h-3.5" />
+                  Creator Dashboard
+                </span>
               </NavLink>
 
               <NavLink to="/bookings" className={navLinkClass}>
-                My Bookings
+                <span className="flex items-center gap-1.5">
+                  <CalendarCheck className="w-3.5 h-3.5" />
+                  My Bookings
+                </span>
               </NavLink>
 
               {/* Categories Dropdown */}
@@ -97,6 +104,7 @@ export const Navbar = () => {
                   onClick={() => setIsCatOpen(!isCatOpen)}
                   className="flex items-center gap-1 text-xs font-semibold tracking-wide text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-800/60 py-1.5 px-3 rounded-xl transition-colors"
                 >
+                  <Layers className="w-3.5 h-3.5 text-slate-400" />
                   <span>Categories</span>
                   <ChevronDown
                     className={`w-3.5 h-3.5 transition-transform duration-150 ${
@@ -135,77 +143,42 @@ export const Navbar = () => {
             </nav>
           </div>
 
-          {/* Right: Actions & User Session */}
+          {/* Right: Evaluator Perspective Switcher & Theme Toggle */}
           <div className="hidden md:flex items-center gap-3">
+            {/* 1-Click Perspective Switcher for Evaluators (No account required) */}
+            <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80 text-[11px] font-semibold">
+              <span className="text-[10px] text-slate-400 dark:text-slate-500 pl-1">Perspective:</span>
+              <button
+                type="button"
+                onClick={() => setRole('client')}
+                className={`px-2.5 py-1 rounded-lg transition-all ${
+                  isClient
+                    ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm font-bold'
+                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                Client
+              </button>
+              <button
+                type="button"
+                onClick={() => setRole('creator')}
+                className={`px-2.5 py-1 rounded-lg transition-all ${
+                  isCreator
+                    ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm font-bold'
+                    : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                Creator
+              </button>
+            </div>
+
             {/* Theme Toggle */}
             <ThemeToggle />
-
-            {isAuthenticated ? (
-              /* Authenticated User: Real user avatar & profile dropdown */
-              <ProfileMenu />
-            ) : (
-              /* Guest / Evaluator View */
-              <div className="flex items-center gap-2.5">
-                {/* 1-Click Role Switcher for Hackathon Graders (Zero Account Requirement) */}
-                <div className="flex items-center p-0.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-[11px] font-semibold">
-                  <button
-                    type="button"
-                    onClick={() => setRole('client')}
-                    className={`px-2.5 py-1 rounded-lg transition-all ${
-                      isClient
-                        ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm font-bold'
-                        : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-                    }`}
-                  >
-                    Client
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setRole('creator')}
-                    className={`px-2.5 py-1 rounded-lg transition-all ${
-                      isCreator
-                        ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm font-bold'
-                        : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
-                    }`}
-                  >
-                    Creator
-                  </button>
-                </div>
-
-                <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
-
-                <Link
-                  to="/login"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors"
-                >
-                  <LogIn className="w-3.5 h-3.5" />
-                  <span>Log In</span>
-                </Link>
-
-                <Link
-                  to="/register"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-sm hover:shadow-glow-primary transition-all"
-                >
-                  <UserPlus className="w-3.5 h-3.5" />
-                  <span>Sign Up</span>
-                </Link>
-              </div>
-            )}
           </div>
 
           {/* Mobile Controls */}
           <div className="flex md:hidden items-center gap-2">
             <ThemeToggle />
-            {isAuthenticated ? (
-              <ProfileMenu />
-            ) : (
-              <Link
-                to="/login"
-                className="px-2.5 py-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400"
-              >
-                Log In
-              </Link>
-            )}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -229,6 +202,32 @@ export const Navbar = () => {
             transition={{ duration: 0.2 }}
             className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-3 pb-5 space-y-3"
           >
+            {/* Perspective Switcher */}
+            <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 text-xs">
+              <span className="font-semibold text-slate-500 dark:text-slate-400">Perspective:</span>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setRole('client')}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                    isClient ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-300'
+                  }`}
+                >
+                  Client
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRole('creator')}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                    isCreator ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-300'
+                  }`}
+                >
+                  Creator
+                </button>
+              </div>
+            </div>
+
+            {/* 5 Core Feature Links */}
             <div className="flex flex-col space-y-1">
               <Link
                 to="/explore"
@@ -237,69 +236,27 @@ export const Navbar = () => {
               >
                 Explore Marketplace
               </Link>
-
-              {isAuthenticated ? (
-                <>
-                  {isCreator ? (
-                    <>
-                      <Link
-                        to="/my-gigs"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="px-3 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                      >
-                        My Gigs
-                      </Link>
-                      <Link
-                        to="/creator-dashboard"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="px-3 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                      >
-                        Creator Dashboard
-                      </Link>
-                      <Link
-                        to="/create-gig"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="mt-2 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
-                      >
-                        <PlusCircle className="w-4 h-4" />
-                        <span>Post a Gig</span>
-                      </Link>
-                    </>
-                  ) : (
-                    <Link
-                      to="/bookings"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="px-3 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                    >
-                      My Bookings
-                    </Link>
-                  )}
-                  <Link
-                    to="/profile"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-3 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                  >
-                    Profile Settings
-                  </Link>
-                </>
-              ) : (
-                <div className="pt-2 flex flex-col gap-2">
-                  <Link
-                    to="/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full text-center py-2.5 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800"
-                  >
-                    Log In
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full text-center py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm"
-                  >
-                    Sign Up
-                  </Link>
-                </div>
-              )}
+              <Link
+                to="/create-gig"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+              >
+                Post a Gig
+              </Link>
+              <Link
+                to="/creator-dashboard"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+              >
+                Creator Dashboard
+              </Link>
+              <Link
+                to="/bookings"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="px-3 py-2 rounded-xl text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+              >
+                My Bookings
+              </Link>
             </div>
 
             {/* Mobile Categories list */}

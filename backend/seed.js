@@ -221,16 +221,15 @@ const seedDatabase = async () => {
     const seededGigs = await Gig.insertMany(gigsData);
     console.log(`Seeded ${seededGigs.length} high-quality marketplace gigs.`);
 
-    // 3. Create Sample Bookings for Client & Creator
+    // 3. Create Sample Bookings for Client & Creator (Pending, Accepted, Declined)
     await Booking.create([
       {
         gig: seededGigs[0]._id,
         client: clientUser._id,
         creator: creatorUser1._id,
         agreedRate: seededGigs[0].rate,
-        message: "Need a modern SaaS MVP for an AI creator tool. Please include authentication and dashboard.",
+        message: "Need a modern SaaS MVP for an AI creator tool with clean architecture.",
         status: "accepted",
-        paymentStatus: "pending",
       },
       {
         gig: seededGigs[2]._id,
@@ -239,7 +238,6 @@ const seedDatabase = async () => {
         agreedRate: seededGigs[2].rate,
         message: "Looking for a clean mobile design system for our iOS fintech application.",
         status: "pending",
-        paymentStatus: "pending",
       },
       {
         gig: seededGigs[4]._id,
@@ -247,15 +245,12 @@ const seedDatabase = async () => {
         creator: creatorUser3._id,
         agreedRate: seededGigs[4].rate,
         message: "Editing 5 reel clips for an upcoming product launch campaign.",
-        status: "accepted",
-        paymentStatus: "paid",
-        razorpayOrderId: "order_demo_101",
-        razorpayPaymentId: "pay_demo_success_882",
-        paidAt: new Date(Date.now() - 86400000),
+        status: "declined",
+        declineReason: "Currently at maximum project bandwidth for this sprint.",
       },
     ]);
 
-    console.log("Seeded 3 sample bookings (Accepted/Pending/Paid).");
+    console.log("Seeded 3 sample bookings covering all brief statuses (Pending, Accepted, Declined).");
     console.log("=========================================");
     console.log("Database successfully seeded!");
     console.log("Demo Credentials:");

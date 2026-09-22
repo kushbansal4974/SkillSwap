@@ -28,7 +28,7 @@ export const Footer = () => {
               </span>
               <span className="inline-flex items-center gap-1.5 font-medium">
                 <Zap className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                Secure Payments
+                Instant Confirmations
               </span>
             </div>
           </div>
@@ -79,6 +79,11 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/create-gig" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                  Post a Gig
+                </Link>
+              </li>
+              <li>
                 <Link to="/creator-dashboard" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Creator Dashboard
                 </Link>
@@ -88,28 +93,23 @@ export const Footer = () => {
                   My Bookings
                 </Link>
               </li>
-              <li>
-                <Link to="/profile" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
-                  Account Settings
-                </Link>
-              </li>
             </ul>
           </div>
 
           {/* Trust & Quality */}
           <div>
             <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
-              Trust & Security
+              Trust & Delivery
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-400">
               <li>
-                <span>Buyer Protection</span>
-              </li>
-              <li>
-                <span>Escrow Sandbox Checkout</span>
+                <span>Direct Confirmations</span>
               </li>
               <li>
                 <span>Verified Milestones</span>
+              </li>
+              <li>
+                <span>Zero-Barrier Access</span>
               </li>
               <li>
                 <span>Production Ready</span>

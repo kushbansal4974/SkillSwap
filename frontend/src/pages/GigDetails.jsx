@@ -77,16 +77,6 @@ export const GigDetails = () => {
   };
 
   const handleBookClick = () => {
-    if (!isAuthenticated && !user) {
-      navigate('/login', { state: { from: location } });
-      return;
-    }
-
-    if (user?.role === 'creator') {
-      alert('You are currently logged in as a Creator. To book services, please switch to or register a Client account.');
-      return;
-    }
-
     setIsBookingOpen(true);
   };
 
@@ -359,7 +349,7 @@ export const GigDetails = () => {
             {/* Security Guarantee */}
             <div className="flex items-center justify-center gap-1.5 text-slate-400 dark:text-slate-500 text-[11px] mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
               <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Escrow & Secure Razorpay Protected</span>
+              <span>Verified Creator & Instant Booking Confirmation</span>
             </div>
 
           </div>

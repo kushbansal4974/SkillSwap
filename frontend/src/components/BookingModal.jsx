@@ -90,7 +90,7 @@ export const BookingModal = ({ isOpen, onClose, gig }) => {
                 Booking Request Sent!
               </h4>
               <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mb-6 max-w-sm mx-auto leading-relaxed">
-                Your request has been submitted to the creator. Once accepted, you can review details and complete payment under My Bookings.
+                Your booking request has been confirmed and submitted to the creator. You can track status (Pending, Accepted, or Declined) under My Bookings.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button
@@ -167,10 +167,10 @@ export const BookingModal = ({ isOpen, onClose, gig }) => {
                 </p>
               </div>
 
-              {/* Security Banner */}
+              {/* Confirmation Banner */}
               <div className="flex items-center gap-2 p-2.5 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/40 text-[11px] text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-900/50">
                 <ShieldCheck className="w-4 h-4 flex-shrink-0 text-indigo-600 dark:text-indigo-400" />
-                <span>No upfront charge. Payment is requested only after the creator accepts.</span>
+                <span>Instant confirmation. Status updates (Pending, Accepted, Declined) tracked live.</span>
               </div>
 
               {/* Action Buttons */}

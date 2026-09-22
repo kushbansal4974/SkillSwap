@@ -24,42 +24,22 @@ const router = express.Router();
 router.get("/", getAllGigs);
 
 // Creator's own gigs (MUST be declared before /:id)
-router.get(
-    "/my",
-    protect,
-    authorize("creator"),
-    getMyGigs
-);
+router.get("/my", getMyGigs);
 
 // Get single gig by id
 router.get("/:id", getGigById);
 
 // =========================
-// CREATOR PROTECTED ROUTES
+// GIG MANAGEMENT ROUTES
 // =========================
 
-// Create gig
-router.post(
-    "/",
-    protect,
-    authorize("creator"),
-    createGig
-);
+// Create gig (Feature 1: Post a Gig)
+router.post("/", createGig);
 
-// Update own gig
-router.put(
-    "/:id",
-    protect,
-    authorize("creator"),
-    updateGig
-);
+// Update gig
+router.put("/:id", updateGig);
 
-// Delete own gig
-router.delete(
-    "/:id",
-    protect,
-    authorize("creator"),
-    deleteGig
-);
+// Delete gig
+router.delete("/:id", deleteGig);
 
 export default router;

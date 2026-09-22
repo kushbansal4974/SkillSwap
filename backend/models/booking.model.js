@@ -46,29 +46,6 @@ const bookingSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    paymentStatus: {
-      type: String,
-      enum: {
-        values: ["pending", "paid", "failed", "refunded"],
-        message: "Invalid payment status",
-      },
-      default: "pending",
-    },
-
-    razorpayOrderId: {
-      type: String,
-      default: null,
-    },
-
-    razorpayPaymentId: {
-      type: String,
-      default: null,
-    },
-
-    paidAt: {
-      type: Date,
-      default: null,
-    },
   },
   {
     timestamps: true,
@@ -76,23 +53,12 @@ const bookingSchema = new mongoose.Schema(
   },
 );
 
-// Useful indexes
+// Useful indexes for performance
 bookingSchema.index({ client: 1, createdAt: -1 });
 bookingSchema.index({ creator: 1, status: 1 });
 bookingSchema.index({ gig: 1, status: 1 });
 
-// Prevent duplicate pending booking
-// by the same client for the same gig
-bookingSchema.index(
-  { gig: 1, client: 1 },
-  {
-    unique: true,
-    partialFilterExpression: {
-      status: "pending",
-    },
-  },
-);
-
 const Booking = mongoose.model("Booking", bookingSchema);
+
 
 export default Booking;

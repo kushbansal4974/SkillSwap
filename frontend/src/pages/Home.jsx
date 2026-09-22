@@ -219,10 +219,10 @@ export const Home = () => {
               <span>Peace of Mind Guaranteed</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black tracking-tight leading-snug">
-              Work with confidence. Escrow payments protected on every booking.
+              Work with confidence. Direct, transparent creator bookings.
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Your funds are held securely. The creator receives payment only when you confirm satisfaction with the deliverables.
+              Connect directly with verified talent. Clear deliverables, fixed rates, structured milestones, and instant booking confirmations.
             </p>
             <div className="pt-2">
               <Link
