@@ -60,10 +60,14 @@ app.use("/api/v1/bookings", bookingRoutes);
 // Error handler
 app.use(errorMiddleware);
 
-// Server
+// Server (standalone mode)
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 SkillSwap Server running on port ${PORT}`);
-  console.log(`📡 Healthcheck: http://localhost:${PORT}/api/health`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 SkillSwap Server running on port ${PORT}`);
+    console.log(`📡 Healthcheck: http://localhost:${PORT}/api/health`);
+  });
+}
+
+export default app;

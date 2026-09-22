@@ -2,14 +2,22 @@ import mongoose from "mongoose";
 import dns from "node:dns";
 
 const connectDB = async () => {
+    if (mongoose.connection.readyState >= 1) {
+        return mongoose.connection;
+    }
     try {
+
         try {
             dns.setServers(["1.1.1.1", "8.8.8.8"]);
         } catch {
             // Ignore if custom DNS not permitted
         }
 
-        const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/skillswap";
+        const mongoUri =
+            process.env.MONGO_URI ||
+            process.env.MONGODB_URI ||
+            "mongodb+srv://bkush535_db_user:ByI7OAgq2yBHQKSG@cluster0.6fguzxo.mongodb.net/skillswap?retryWrites=true&w=majority";
+
         
         // Explicitly set dbName to skillswap so Mongoose never writes to test
         const connection = await mongoose.connect(mongoUri, {
